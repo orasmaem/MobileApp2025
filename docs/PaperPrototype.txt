@@ -1,0 +1,20 @@
+US1 (we considered this to be the most important)
+As a student I’d like to find the best possible private tutor for me, based on what I need to study and how much money they are asking.
+
+US2
+As a tutor I’d like to have access to a large repository of paying customers who choose me based on my expertise and pricing.
+
+US3
+As a tutor I’d like to have an overview of my weekly schedule, so that I can plan my time and don’t have overlapping lessons.
+
+US4
+As a student I’d like to have an overview of my weekly schedule, so that I can plan my time and don’t have overlapping lessons.
+
+US5
+As a tutor I’d like to be able to create my profile so that students can see my skills, location, photo and the scope of my expertise (e.g. 9th to 10th grade).
+
+US6
+As a student I’d like to be able to browse tutors and see their skills, location, photo and the scope of their expertise (e.g. 9th to 10th grade).
+
+US7
+As a student I’d like to create my profile, so that tutors can see my level of education, desired field of study.
