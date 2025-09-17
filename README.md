@@ -49,3 +49,18 @@ An app which connects tutors and students in a way where they can see eachothers
 9.Profile Verification
 
   -Document uploads (e.g., ID, degree verification for tutors)
+
+
+# Tools & Frameworks
+
+IDE & Language: Android Studio + Kotlin
+
+UI Layer: Jetpack Compose (recommended) or XML layouts
+
+Navigation & State Management: Jetpack Navigation Component, ViewModel + LiveData/Flow
+
+Data & Storage: Room (local DB), Firebase Firestore (cloud + real-time sync)
+
+Authentication & Verification: Firebase Auth, optional KYC service (Onfido, etc.)
+
+Chat & Realtime Features: Firebase Realtime Database / Firestore OR Socket.IO backend
