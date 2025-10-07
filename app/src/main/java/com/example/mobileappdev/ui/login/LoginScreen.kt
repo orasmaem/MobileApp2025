@@ -8,23 +8,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginScreen(role: String, onLoginClick: () -> Unit) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+fun LoginScreen(
+    role: String,
+    onLoginClick: () -> Unit,
+    onCreateAccountClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "Log in as ${role.replaceFirstChar { it.uppercase() }}",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(bottom = 32.dp)
-            )
-            Button(
-                onClick = onLoginClick,
-                modifier = Modifier.fillMaxWidth().padding(8.dp)
-            ) {
-                Text("Log In")
-            }
+        Text("Welcome, $role!")
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = onLoginClick) {
+            Text("Log In")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextButton(onClick = onCreateAccountClick) {
+            Text("Create an Account")
         }
     }
 }

@@ -8,15 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.mobileappdev.ui.home.HomeScreen
 import com.example.mobileappdev.ui.login.LoginScreen
 import com.example.mobileappdev.ui.role.RoleSelectionScreen
 import com.example.mobileappdev.ui.match.MatchScreen
 import com.example.mobileappdev.ui.preferences.PreferencesScreen
 import com.example.mobileappdev.ui.timetable.TimetableScreen
+import com.example.mobileappdev.ui.profile.ProfileSetupScreen
 import com.example.mobileappdev.ui.theme.MobileAppDevTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "role"
                     ) {
-                        // Choose role
+                        // Choose Role
                         composable("role") {
                             RoleSelectionScreen(
                                 onRoleSelected = { selectedRole ->
@@ -44,14 +47,20 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        //Login
+                        // Login
                         composable("login/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
-                            LoginScreen(role = role) {
-                                navController.navigate("home/$role") {
-                                    popUpTo("role") { inclusive = true } // clear previous flow
+                            LoginScreen(
+                                role = role,
+                                onLoginClick = {
+                                    navController.navigate("home/$role") {
+                                        popUpTo("role") { inclusive = true } // clear onboarding
+                                    }
+                                },
+                                onCreateAccountClick = {
+                                    navController.navigate("profileSetup/$role?edit=false")
                                 }
-                            }
+                            )
                         }
 
                         // Home
@@ -61,11 +70,35 @@ class MainActivity : ComponentActivity() {
                                 role = role,
                                 onMatchClick = { navController.navigate("match/$role") },
                                 onTimetableClick = { navController.navigate("timetable/$role") },
-                                onPreferencesClick = { navController.navigate("preferences/$role") }
+                                onPreferencesClick = {
+                                    navController.navigate("profileSetup/$role?edit=true")
+                                }
                             )
                         }
 
-                        // Match screen
+                        // Profile Setup / Edit Profile
+                        composable(
+                            route = "profileSetup/{role}?edit={edit}",
+                            arguments = listOf(
+                                navArgument("role") { type = NavType.StringType },
+                                navArgument("edit") { type = NavType.BoolType; defaultValue = false }
+                            )
+                        ) { backStackEntry ->
+                            val role = backStackEntry.arguments?.getString("role") ?: "student"
+                            val isEditing = backStackEntry.arguments?.getBoolean("edit") ?: false
+
+                            ProfileSetupScreen(
+                                role = role,
+                                isEditing = isEditing,
+                                onSaveProfile = {
+                                    navController.navigate("home/$role") {
+                                        popUpTo("role") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+
+                        // Match Screen
                         composable("match/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
                             MatchScreen(
@@ -74,7 +107,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        // Timetable screen
+                        // Timetable Screen
                         composable("timetable/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
                             TimetableScreen(
@@ -83,7 +116,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        // Preferences screen
+                        // Preferences Screen (legacy route, optional)
                         composable("preferences/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
                             PreferencesScreen(
