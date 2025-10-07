@@ -12,13 +12,13 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeScreen(
+    role: String = "student",
     onMatchClick: () -> Unit,
     onTimetableClick: () -> Unit,
-    onPreferencesClick: () -> Unit,
-    onProfileClick: () -> Unit = {}
+    onPreferencesClick: () -> Unit
 ) {
     Scaffold(
-        topBar = { HomeTopBar(onProfileClick) }
+        topBar = { /* your custom top bar here */ }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -28,29 +28,41 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                onClick = onMatchClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) { Text("Match with tutors") }
+            if (role == "student") {
+                Button(
+                    onClick = onMatchClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("Match with tutors") }
 
-            Button(
-                onClick = onTimetableClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) { Text("My timetable") }
+                Button(
+                    onClick = onTimetableClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("My timetable") }
 
-            Button(
-                onClick = onPreferencesClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) { Text("Edit preferences") }
+                Button(
+                    onClick = onPreferencesClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("Edit preferences") }
+            } else {
+                Button(
+                    onClick = onMatchClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("Connect with students") }
+
+                Button(
+                    onClick = onTimetableClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("My timetable") }
+
+                Button(
+                    onClick = onPreferencesClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("Edit my qualifications") }
+            }
         }
     }
 }
+
 
 @Composable
 private fun HomeTopBar(onProfileClick: () -> Unit) {

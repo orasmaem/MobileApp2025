@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.mobileappdev.ui.common.SimpleTopBar
 
 @Composable
-fun PreferencesScreen(onBackClick: () -> Unit) {
+fun PreferencesScreen(onBackClick: () -> Unit, role: String) {
     Box(modifier = Modifier.fillMaxSize()) {
         // Top bar
         SimpleTopBar(title = "Edit preferences", onBackClick = onBackClick)

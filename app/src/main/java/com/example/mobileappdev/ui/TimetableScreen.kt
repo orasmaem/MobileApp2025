@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.mobileappdev.ui.common.SimpleTopBar
 
 @Composable
-fun TimetableScreen(onBackClick: () -> Unit) {
+fun TimetableScreen(onBackClick: () -> Unit, role: String) {
     Box(modifier = Modifier.fillMaxSize()) {
         SimpleTopBar(title = "Timetable", onBackClick = onBackClick)
 
