@@ -15,10 +15,11 @@ fun HomeScreen(
     role: String = "student",
     onMatchClick: () -> Unit,
     onTimetableClick: () -> Unit,
-    onPreferencesClick: () -> Unit
+    onPreferencesClick: () -> Unit,
+    onLogoutClick: () -> Unit
 ) {
     Scaffold(
-        topBar = { /* your custom top bar here */ }
+        topBar = { /* top bar*/ }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -59,6 +60,15 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
                 ) { Text("Edit my qualifications") }
             }
+
+            OutlinedButton(
+                onClick = onLogoutClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp)
+            ) {
+                Text("Logout")
+            }
         }
     }
 }
@@ -94,5 +104,5 @@ private fun HomeTopBar(onProfileClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(onMatchClick = {}, onTimetableClick = {}, onPreferencesClick = {})
+    HomeScreen(onMatchClick = {}, onTimetableClick = {}, onPreferencesClick = {}, onLogoutClick = {})
 }

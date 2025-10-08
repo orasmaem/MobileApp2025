@@ -70,9 +70,11 @@ class MainActivity : ComponentActivity() {
                                 role = role,
                                 onMatchClick = { navController.navigate("match/$role") },
                                 onTimetableClick = { navController.navigate("timetable/$role") },
-                                onPreferencesClick = {
-                                    navController.navigate("profileSetup/$role?edit=true")
-                                }
+                                onPreferencesClick = { navController.navigate("profileSetup/$role?edit=true") },
+                                onLogoutClick = {navController.navigate("role") {popUpTo("role") { inclusive =true} } }
+
+
+
                             )
                         }
 
