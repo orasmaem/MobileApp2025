@@ -19,7 +19,7 @@ fun HomeScreen(
     onLogoutClick: () -> Unit
 ) {
     Scaffold(
-        topBar = { /* top bar*/ }
+        topBar = { HomeTopBar {  } }
     ) { paddingValues ->
         Column(
             modifier = Modifier

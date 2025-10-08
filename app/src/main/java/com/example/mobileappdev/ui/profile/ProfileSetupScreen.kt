@@ -37,6 +37,15 @@ fun ProfileSetupScreen(
     else
         listOf("Bachelor", "Master", "PhD")
 
+    val isFormValid by remember {
+        derivedStateOf {
+            selectedDropdown.isNotEmpty() &&
+                    selectedSubjects.values.any { it } &&
+                    aboutText.text.isNotBlank()
+        }
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -126,7 +135,17 @@ fun ProfileSetupScreen(
             }
         }
 
-        // Save / Create button
+        // "All fields required" note
+        if (!isFormValid) {
+            Text(
+                text = "* Please fill in all required fields before continuing.",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
+        // Save / Create button (enabled only when valid)
         Button(
             onClick = {
                 ProfileStorage.saveProfile(
@@ -138,6 +157,7 @@ fun ProfileSetupScreen(
                 )
                 onSaveProfile()
             },
+            enabled = isFormValid, // disable until valid
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
