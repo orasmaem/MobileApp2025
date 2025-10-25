@@ -16,7 +16,7 @@ import androidx.navigation.navArgument
 import com.example.mobileappdev.ui.home.HomeScreen
 import com.example.mobileappdev.ui.login.LoginScreen
 import com.example.mobileappdev.ui.role.RoleSelectionScreen
-import com.example.mobileappdev.ui.match.MatchScreen
+import com.example.mobileappdev.ui.MatchScreen
 import com.example.mobileappdev.ui.preferences.PreferencesScreen
 import com.example.mobileappdev.ui.timetable.TimetableScreen
 import com.example.mobileappdev.ui.profile.ProfileSetupScreen
