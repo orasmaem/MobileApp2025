@@ -16,10 +16,11 @@ fun HomeScreen(
     onMatchClick: () -> Unit,
     onTimetableClick: () -> Unit,
     onPreferencesClick: () -> Unit,
+    onBooksClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     Scaffold(
-        topBar = { HomeTopBar {  } }
+        topBar = { HomeTopBar { } }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -44,6 +45,13 @@ fun HomeScreen(
                     onClick = onPreferencesClick,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
                 ) { Text("Edit preferences") }
+
+
+                Button(
+                    onClick = onBooksClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("Browse Books") }
+
             } else {
                 Button(
                     onClick = onMatchClick,
@@ -59,6 +67,12 @@ fun HomeScreen(
                     onClick = onPreferencesClick,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
                 ) { Text("Edit my qualifications") }
+
+
+                Button(
+                    onClick = onBooksClick,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                ) { Text("Browse Books") }
             }
 
             OutlinedButton(
@@ -72,7 +86,6 @@ fun HomeScreen(
         }
     }
 }
-
 
 @Composable
 private fun HomeTopBar(onProfileClick: () -> Unit) {
@@ -104,5 +117,11 @@ private fun HomeTopBar(onProfileClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(onMatchClick = {}, onTimetableClick = {}, onPreferencesClick = {}, onLogoutClick = {})
+    HomeScreen(
+        onMatchClick = {},
+        onTimetableClick = {},
+        onPreferencesClick = {},
+        onBooksClick = {},
+        onLogoutClick = {}
+    )
 }

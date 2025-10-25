@@ -21,6 +21,7 @@ import com.example.mobileappdev.ui.preferences.PreferencesScreen
 import com.example.mobileappdev.ui.timetable.TimetableScreen
 import com.example.mobileappdev.ui.profile.ProfileSetupScreen
 import com.example.mobileappdev.ui.theme.MobileAppDevTheme
+import com.example.mobileappdev.ui.books.BooksScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +39,11 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "role"
                     ) {
-                        // Choose Role
+                        // Role selection
                         composable("role") {
-                            RoleSelectionScreen(
-                                onRoleSelected = { selectedRole ->
-                                    navController.navigate("login/$selectedRole")
-                                }
-                            )
+                            RoleSelectionScreen { selectedRole ->
+                                navController.navigate("login/$selectedRole")
+                            }
                         }
 
                         // Login
@@ -54,7 +53,7 @@ class MainActivity : ComponentActivity() {
                                 role = role,
                                 onLoginClick = {
                                     navController.navigate("home/$role") {
-                                        popUpTo("role") { inclusive = true } // clear onboarding
+                                        popUpTo("role") { inclusive = true }
                                     }
                                 },
                                 onCreateAccountClick = {
@@ -71,14 +70,18 @@ class MainActivity : ComponentActivity() {
                                 onMatchClick = { navController.navigate("match/$role") },
                                 onTimetableClick = { navController.navigate("timetable/$role") },
                                 onPreferencesClick = { navController.navigate("profileSetup/$role?edit=true") },
-                                onLogoutClick = {navController.navigate("role") {popUpTo("role") { inclusive =true} } }
-
-
-
+                                onBooksClick = {                     // ✅ new button action
+                                    navController.navigate("books?subject=mathematics")
+                                },
+                                onLogoutClick = {
+                                    navController.navigate("role") {
+                                        popUpTo("role") { inclusive = true }
+                                    }
+                                }
                             )
                         }
 
-                        // Profile Setup / Edit Profile
+                        // Profile Setup / Edit
                         composable(
                             route = "profileSetup/{role}?edit={edit}",
                             arguments = listOf(
@@ -88,7 +91,6 @@ class MainActivity : ComponentActivity() {
                         ) { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
                             val isEditing = backStackEntry.arguments?.getBoolean("edit") ?: false
-
                             ProfileSetupScreen(
                                 role = role,
                                 isEditing = isEditing,
@@ -100,30 +102,38 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        // Match Screen
+                        // Match
                         composable("match/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
-                            MatchScreen(
-                                role = role,
-                                onBackClick = { navController.popBackStack() }
-                            )
+                            MatchScreen(role = role, onBackClick = { navController.popBackStack() })
                         }
 
-                        // Timetable Screen
+                        // Timetable
                         composable("timetable/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
-                            TimetableScreen(
-                                role = role,
-                                onBackClick = { navController.popBackStack() }
-                            )
+                            TimetableScreen(role = role, onBackClick = { navController.popBackStack() })
                         }
 
-                        // Preferences Screen (legacy route, optional)
+                        // Preferences (optional legacy)
                         composable("preferences/{role}") { backStackEntry ->
                             val role = backStackEntry.arguments?.getString("role") ?: "student"
-                            PreferencesScreen(
-                                role = role,
-                                onBackClick = { navController.popBackStack() }
+                            PreferencesScreen(role = role, onBackClick = { navController.popBackStack() })
+                        }
+
+                        // ✅ Books (OpenLibrary) — subject is optional with default
+                        composable(
+                            route = "books?subject={subject}",
+                            arguments = listOf(
+                                navArgument("subject") {
+                                    type = NavType.StringType
+                                    defaultValue = "mathematics"
+                                }
+                            )
+                        ) { backStackEntry ->
+                            val subject = backStackEntry.arguments?.getString("subject") ?: "mathematics"
+                            BooksScreen(
+                                onBack = { navController.popBackStack() },
+                                initialSubject = subject
                             )
                         }
                     }
